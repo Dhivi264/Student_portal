@@ -1,43 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Dashboard</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body class="student-bg">
+{% extends "index.html" %}
 
-  <!-- Sidebar Toggle -->
-  <button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">
-    ☰ Menu
-  </button>
+{% block title %}Student Dashboard{% endblock %}
+{% block body_class %}student-bg{% endblock %}
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <a href="{{ url_for('student_dashboard') }}">🏠 Dashboard</a>
-    <a href="{{ url_for('view_profile') }}">👤 View Profile</a>
-    <a href="{{ url_for('change_password_self') }}">🔑 Change Password</a>
-    <a class="btn-danger" href="{{ url_for('logout') }}">🚪 Logout</a>
-  </div>
+{% block sidebar_toggle %}
+<button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+  ☰ Menu
+</button>
+{% endblock %}
 
-  <!-- Main Overlay Content -->
-  <div class="overlay">
-    <div class="container">
-      <h2>Welcome, Student</h2>
-      <p>This is your student dashboard. Use the sidebar to navigate.</p>
+{% block sidebar %}
+<div class="sidebar">
+  <a href="{{ url_for('student_dashboard') }}" class="active">👤 My Profile</a>
+  <a href="{{ url_for('change_password_self') }}">🔑 Change Password</a>
+  <a class="btn-danger" href="{{ url_for('logout') }}">🚪 Logout</a>
+</div>
+{% endblock %}
 
-      <div class="student-card">
-        <img src="https://via.placeholder.com/72" alt="student">
+{% block content %}
+<div class="container">
+  <h2>My Profile</h2>
+
+  {% if student %}
+    <div class="student-card">
+      {% if student.image_filename %}
+        <img src="{{ url_for('uploaded_file', filename=student.image_filename) }}" alt="Profile">
+      {% else %}
+        <img src="{{ url_for('static', filename='default-avatar.png') }}" alt="Profile">
+      {% endif %}
+
+      <div>
+        <div><b>{{ student.name }}</b></div>
+        <div>Username: {{ student.student_username }}</div>
+        <div>Phone: {{ student.phone or '-' }}</div>
+        <div>Email: {{ student.email or '-' }}</div>
+        <div>CGPA: {{ student.cgpa or '-' }}</div>
+        <div>Attendance: {{ student.attendance or 0 }}%</div>
+        <div>Address: {{ student.address or '-' }}</div>
         <div>
-          <h3>Your Name</h3>
-          <p>Branch: Computer Science</p>
-          <p>Roll No: 12345</p>
+          Scholarship:
+          {% if student.is_scholarship %}
+            {{ student.scholarship_name or 'Yes' }}
+          {% else %}
+            No
+          {% endif %}
         </div>
       </div>
-
     </div>
-  </div>
-
-</body>
-</html>
+  {% else %}
+    <p>No profile found. Contact admin.</p>
+  {% endif %}
+</div>
+{% endblock %}

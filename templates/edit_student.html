@@ -1,25 +1,60 @@
-{% extends "base.html" %}
+{% extends "index.html" %}
+
+{% block title %}Edit Student{% endblock %}
+{% block body_class %}admin-bg{% endblock %}
+
+{% block sidebar_toggle %}
+<button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+  ☰ Menu
+</button>
+{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar">
+  <a href="{{ url_for('admin_dashboard') }}">🏠 Dashboard</a>
+  <a href="{{ url_for('add_student') }}">➕ Add Student</a>
+  <a href="{{ url_for('admin_search') }}">🔍 Search</a>
+  <a href="{{ url_for('change_password_self') }}">🔑 Change Password</a>
+  <a class="btn-danger" href="{{ url_for('logout') }}">🚪 Logout</a>
+</div>
+{% endblock %}
+
 {% block content %}
-<h2>Edit Student</h2>
-<form method="post" enctype="multipart/form-data">
-  <input name="name" value="{{ student.name }}" required>
-  <input name="address" value="{{ student.address }}">
-  <input name="phone" value="{{ student.phone }}">
-  <input name="email" value="{{ student.email }}">
-  <input name="cgpa" value="{{ student.cgpa }}" type="number" step="0.01">
-  <input name="attendance" value="{{ student.attendance }}" type="number" step="0.01">
-  <select name="arrears">
-    <option value="No" {% if student.arrears=='No' %}selected{% endif %}>No</option>
-    <option value="Yes" {% if student.arrears=='Yes' %}selected{% endif %}>Yes</option>
-  </select>
+<div class="container">
+  <h2>Edit Student</h2>
+  <form method="post" enctype="multipart/form-data">
+    
+    <!-- Profile -->
+    <input name="name" value="{{ student.name }}" placeholder="Full name" required>
+    <input name="address" value="{{ student.address }}" placeholder="Address">
+    <input name="phone" value="{{ student.phone }}" placeholder="Phone">
+    <input name="email" value="{{ student.email }}" placeholder="Email">
+    <input name="cgpa" value="{{ student.cgpa }}" type="number" step="0.01" placeholder="CGPA">
+    <input name="attendance" value="{{ student.attendance }}" type="number" step="1" placeholder="Attendance %">
 
-  <label><input type="checkbox" name="is_scholarship" {% if student.is_scholarship %}checked{% endif %}> Scholarship</label>
-  <input name="scholarship_name" value="{{ student.scholarship_name }}">
+    <!-- Arrears -->
+    <label for="arrears">Arrears</label>
+    <select name="arrears" id="arrears">
+      <option value="No" {% if student.arrears == 'No' %}selected{% endif %}>No arrears</option>
+      <option value="Yes" {% if student.arrears == 'Yes' %}selected{% endif %}>Has arrears</option>
+    </select>
 
-  <label>Replace profile image (optional)</label>
-  <input type="file" name="image" accept="image/*">
-  <button type="submit">Save Changes</button>
-</form>
+    <!-- Scholarship -->
+    <label>
+      <input type="checkbox" name="is_scholarship" {% if student.is_scholarship %}checked{% endif %}>
+      Scholarship student
+    </label>
+    <input name="scholarship_name" value="{{ student.scholarship_name }}" placeholder="Scholarship name (if any)">
 
-<div style="margin-top:10px"><a class="btn btn-secondary" href="{{ url_for('admin_dashboard') }}">Back</a></div>
+    <!-- Profile Image -->
+    <label for="image">Replace Profile Image (optional)</label>
+    <input type="file" name="image" id="image" accept="image/*">
+
+    <button type="submit">Save Changes</button>
+  </form>
+
+  <div style="margin-top: 10px;">
+  <a href="{{ url_for('admin_dashboard') }}" class="btn-box">Back</a>
+</div>
+</div>
 {% endblock %}

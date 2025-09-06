@@ -1,16 +1,22 @@
-{% extends "base.html" %}
+{% extends "index.html" %}
+
+{% block title %}Login{% endblock %}
+{% block body_class %}login-bg{% endblock %}
+
 {% block content %}
 <div class="login-wrapper">
   <div class="login-card">
     <h2>Login</h2>
     <form method="post">
-      <label>I am a:</label>
-      <select name="role" required>
+      <label for="role">I am a:</label>
+      <select id="role" name="role" required>
         <option value="admin">Admin</option>
         <option value="student">Student</option>
       </select>
-      <input name="username" placeholder="Username" required>
-      <input name="password" type="password" placeholder="Password" required>
+
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+
       <button type="submit">Login</button>
     </form>
   </div>

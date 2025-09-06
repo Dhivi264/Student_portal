@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Student Portal{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+  <!-- ✅ Sidebar toggle button (optional, for dashboards) -->
+  {% block sidebar_toggle %}{% endblock %}
+
+  <!-- ✅ Sidebar (optional, for dashboards) -->
+  {% block sidebar %}{% endblock %}
+
+  <!-- ✅ Flash messages -->
+  <div class="flash-container" style="position: fixed; top: 20px; right: 20px; z-index: 1200;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- ✅ Main content -->
+  <main class="page-content">
+    {% block content %}{% endblock %}
+  </main>
+
+</body>
+</html>

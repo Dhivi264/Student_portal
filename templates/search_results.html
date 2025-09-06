@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Search Results for "{{ q }}"</h2>
+{% if students %}
+  {% for s in students %}
+    <div class="student-card" style="margin:12px 0;">
+      {% if s.image_filename %}
+        <img src="{{ url_for('uploaded_file', filename=s.image_filename) }}" alt="Profile">
+      {% else %}
+        <img src="https://via.placeholder.com/72" alt="Profile">
+      {% endif %}
+      <div>
+        <div><b>{{ s.name }}</b></div>
+        <div>Username: {{ s.student_username }}</div>
+        <div>Phone: {{ s.phone or '-' }}</div>
+        <div>CGPA: {{ s.cgpa or '-' }}</div>
+        <div>Attendance: {{ s.attendance or 0 }}%</div>
+        <div>Scholarship: {% if s.is_scholarship %}{{ s.scholarship_name or 'Yes' }}{% else %}No{% endif %}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a class="btn" href="{{ url_for('edit_student', student_id=s.id) }}">Edit</a>
+        <a class="btn" href="{{ url_for('reset_password', user_id=s.user_id) }}">Reset Password</a>
+        <form method="post" action="{{ url_for('delete_student', student_id=s.id) }}" onsubmit="return confirm('Delete student?')">
+          <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No students found.</p>
+{% endif %}
+<div style="margin-top:10px;"><a class="btn btn-secondary" href="{{ url_for('admin_dashboard') }}">Back</a></div>
+{% endblock %}

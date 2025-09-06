@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Student</h2>
+<form method="post" enctype="multipart/form-data">
+  <input name="name" value="{{ student.name }}" required>
+  <input name="address" value="{{ student.address }}">
+  <input name="phone" value="{{ student.phone }}">
+  <input name="email" value="{{ student.email }}">
+  <input name="cgpa" value="{{ student.cgpa }}" type="number" step="0.01">
+  <input name="attendance" value="{{ student.attendance }}" type="number" step="0.01">
+  <select name="arrears">
+    <option value="No" {% if student.arrears=='No' %}selected{% endif %}>No</option>
+    <option value="Yes" {% if student.arrears=='Yes' %}selected{% endif %}>Yes</option>
+  </select>
+
+  <label><input type="checkbox" name="is_scholarship" {% if student.is_scholarship %}checked{% endif %}> Scholarship</label>
+  <input name="scholarship_name" value="{{ student.scholarship_name }}">
+
+  <label>Replace profile image (optional)</label>
+  <input type="file" name="image" accept="image/*">
+  <button type="submit">Save Changes</button>
+</form>
+
+<div style="margin-top:10px"><a class="btn btn-secondary" href="{{ url_for('admin_dashboard') }}">Back</a></div>
+{% endblock %}

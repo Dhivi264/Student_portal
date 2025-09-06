@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add Student</h2>
+<form method="post" enctype="multipart/form-data">
+  <h4>Student login</h4>
+  <input name="student_username" placeholder="Login username (unique)" required>
+  <input name="student_password" type="password" placeholder="Password" required>
+
+  <h4>Profile</h4>
+  <input name="name" placeholder="Full name" required>
+  <input name="address" placeholder="Address">
+  <input name="phone" placeholder="Phone">
+  <input name="email" placeholder="Email">
+  <input name="cgpa" type="number" step="0.01" placeholder="CGPA">
+  <input name="attendance" type="number" step="0.01" placeholder="Attendance %">
+  <select name="arrears">
+    <option value="No">No arrears</option>
+    <option value="Yes">Has arrears</option>
+  </select>
+
+  <label><input type="checkbox" name="is_scholarship"> Scholarship student</label>
+  <input name="scholarship_name" placeholder="Scholarship name (if any)">
+  <label>Profile image</label>
+  <input type="file" name="image" accept="image/*">
+
+  <button type="submit">Create Student</button>
+</form>
+
+<div style="margin-top:10px"><a class="btn btn-secondary" href="{{ url_for('admin_dashboard') }}">Back</a></div>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="student-bg">
+
+  <!-- Sidebar Toggle -->
+  <button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+    ☰ Menu
+  </button>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <a href="{{ url_for('student_dashboard') }}">🏠 Dashboard</a>
+    <a href="{{ url_for('view_profile') }}">👤 View Profile</a>
+    <a href="{{ url_for('change_password_self') }}">🔑 Change Password</a>
+    <a class="btn-danger" href="{{ url_for('logout') }}">🚪 Logout</a>
+  </div>
+
+  <!-- Main Overlay Content -->
+  <div class="overlay">
+    <div class="container">
+      <h2>Welcome, Student</h2>
+      <p>This is your student dashboard. Use the sidebar to navigate.</p>
+
+      <div class="student-card">
+        <img src="https://via.placeholder.com/72" alt="student">
+        <div>
+          <h3>Your Name</h3>
+          <p>Branch: Computer Science</p>
+          <p>Roll No: 12345</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
